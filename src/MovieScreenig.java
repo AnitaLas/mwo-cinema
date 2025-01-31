@@ -5,12 +5,10 @@ import java.util.List;
 
 public class MovieScreenig {
 
-
     private List<Object> screenigData;
     protected Movie movieData;
     protected String dateAndHourMovieScreening;
     protected  CinemaRoom cinemaRoom;
-
 
 
     MovieScreenig(Movie movieData, String dateAndHourMovieScreening, CinemaRoom cinemaRoom){
@@ -26,8 +24,6 @@ public class MovieScreenig {
         this.screenigData.add(cinemaRoom);
         return screenigData;
     }
-
-
 
     protected List< Object> getScreenigData(){
         return this.screenigData;

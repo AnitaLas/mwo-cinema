@@ -11,7 +11,6 @@ public class Cinema {
     //protected LocalDateTime open =  LocalDateTime.parse("2018-01-11T10:00:00");
     //protected LocalDateTime close =  LocalDateTime.parse("2018-01-11T23:30:00");
     private HashMap<String, CinemaRoom> cinemaRooms;
-    //protected HashMap<Integer, MovieScreenig> moovieCalendar;
     protected List<MovieScreenig> moovieCalendar;
 
 
@@ -21,6 +20,7 @@ public class Cinema {
         this.moovieCalendar = new ArrayList<>();
     }
 
+    // to do - String cinemaName -> Cinema(){}
     protected void setCinemaName(String cinemaName){
         this.cinemaName = cinemaName;
     }
@@ -53,13 +53,12 @@ public class Cinema {
 
         List<MovieScreenig> currentCalendar = new ArrayList<>();
 
-        // sort by date
+        // to do - sort by date
         for(MovieScreenig ms : moovieCalendar){
             // return only ms with today's date and h=currentH +1
             // + 7 day from current date
             // older remove from list?
         }
-
 
         return moovieCalendar;
         //return currentCalendar;
@@ -73,13 +72,11 @@ public class Cinema {
 
 
         // print date and hour
-       // movieScreenig.printDateAndHourMovieScreening();
+        //movieScreenig.printDateAndHourMovieScreening();
 
 
         // print room with reservation
         movieScreenig.cinemaRoom.printCinemaRoomData();
-
-        //System.out.println(" ");
 
     }
 }

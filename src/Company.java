@@ -12,7 +12,6 @@ public class Company {
 
 
     protected void addMovieToCollection(Movie movie){
-       // String title = movie.movieTitle;
         this.movies.put(movie.getMovieTitle(), movie);
     }
 

@@ -10,14 +10,16 @@ public class Main {
 
         Movie film1 = new Movie();
         film1.setMovieTitle("Moana");
-        film1.setMovieTime("String4 44");
-        film1.setMovieKind("Comedy3");
+        film1.setMovieTime("128");
+        film1.setmovieGenre("Comedy");
+        film1.setMovieKind("2D");
         film1.setMovieLanguage("ENG");
 
         Movie film2 = new Movie();
         film2.setMovieTitle("Bolek i Lolek");
         film2.setMovieTime("20");
-        film2.setMovieKind("Comedy");
+        film2.setmovieGenre("Comedy");
+        film2.setMovieKind("3D");
         film2.setMovieLanguage("PL");
 
         headquarter.addMovieToCollection(film1);
@@ -50,10 +52,10 @@ public class Main {
                 "2018-01-29T10:00:00", cinema1.getCinemaRoom("room 1"));
 
         MovieScreenig ms2 = new MovieScreenig(headquarter.getMovieData("Moana"),
-                "2018-01-30T12:00:00", cinema1.getCinemaRoom("room 2"));
+                "2018-02-02T12:00:00", cinema1.getCinemaRoom("room 2"));
 
         MovieScreenig ms3 = new MovieScreenig(headquarter.getMovieData("Bolek i Lolek"),
-                "2018-01-31T14:00:00", cinema1.getCinemaRoom("room 1"));
+                "2018-02-10T14:00:00", cinema1.getCinemaRoom("room 1"));
 
 
         cinema1.addMovieScreenigToCalendar(ms1);
@@ -63,10 +65,20 @@ public class Main {
         //cinema1.printMovieScreeningData(ms1);
         //cinema1.printMovieScreeningData(ms2);
 
+        Client c1 = new Client();
+        c1.setClientEmail("bolek@gmail.com");
+        c1.setClientName("Bolek");
+
         Reservation res1 = new Reservation();
-        res1.chosseMovieScreening(ms1);
-        res1.bookSeatsPerRow("2", "2");
+        res1.chooseMovieScreening(ms1);
+        res1.bookSeatsPerRow("2", "1, 2");
+        res1.bookSeatsPerRow("3", "2, 3");
+        res1.setClient(c1);
+        res1.summariseReservationSeatsDetails();
+
+
         cinema1.printMovieScreeningData(ms1);
+        //cinema1.printMovieScreeningData(ms2);
 
         /*res1.chosseMovieScreening(ms2);
         res1.bookSeatsPerRow("3", "2");
@@ -76,7 +88,7 @@ public class Main {
 
 
         //-------
-
+        // to do - remove - test
         HashMap<String, Object> finalData = new HashMap<>();
 
         HashMap<String, Object> sd1 = new HashMap<>();
@@ -103,8 +115,6 @@ public class Main {
                 if(key1.equals("2")){
                     temp.replace("seatType", "yyyy");
                 }
-
-
             }
             //System.out.println();
         }
