@@ -2,108 +2,112 @@ import java.util.HashMap;
 
 public class Reservation {
 
-    private String clientEmail;// = "amail@ssss.pl";
-    private String reservationNumber;
-    private MovieScreenig movieScreenig;
+    protected MovieScreenig movieScreenig;
     private Client client;
+    private double valueToPay;
+    private HashMap<String, Object> reservationSeatsDetails;
+    private HashMap<String, String[]> chossenSeatsPerRow;
 
-    private HashMap<String, Object> reservationSeatDetails;
-
-   private  HashMap <String, Object> summarisedReservationSeatData;
-
-
-    private HashMap<String, Object> reservationDetails;
-
-
-    Reservation(){
-        this.reservationSeatDetails = new HashMap<>();
-    }
-
-    protected void chooseMovieScreening(MovieScreenig movieScreenig){
+    Reservation(MovieScreenig movieScreenig) {
+        this.reservationSeatsDetails = new HashMap<>();
+        this.chossenSeatsPerRow = new HashMap<>();
         this.movieScreenig = movieScreenig;
     }
 
-    protected void setClient(String clientEmail){
-        this.clientEmail = clientEmail;
+    protected void setClient(String clientEmail) {
+        this.client = new Client();
+        this.client.setClientEmail(clientEmail);
+        this.client.setClientName(" --- ");
     }
 
-    protected void setClient(Client client){
+    protected void setClient(Client client) {
         this.client = client;
     }
 
-    protected Client getClient(){
+    protected Client getClient() {
         return this.client;
     }
 
-    protected void bookSeatsPerRow(String rowNumber, String seatsNumber){
+    public HashMap<String, Object> getReservationSeatsDetails(){
+        return this.reservationSeatsDetails;
+    }
 
+    protected void chooseSeatsPerRow(String rowNumber, String seatsNumber) {
         String seatsNo1 = seatsNumber.replace(" ", "");
         String[] seatsNo2 = seatsNo1.split(",");
+        this.chossenSeatsPerRow.put(rowNumber, seatsNo2);
+    }
 
-       HashMap < String, Object > finalData = movieScreenig.getCinemaRoom().getRowSeatsData(rowNumber);
+    protected void printDocumentDetails() {
+        System.out.println("------------------------------------------------------");
+        System.out.println("   RESERVATION DETAILS   ");
+        System.out.println();
+        System.out.println("Cinema: " + movieScreenig.cinemaRoom.getCinemaName());
+        System.out.println("Address: " + movieScreenig.cinemaRoom.getCinemaAddress());
+        System.out.println();
+        System.out.println("movie title: " + movieScreenig.movieData.getMovieTitle());
+        System.out.println("room name: " + movieScreenig.cinemaRoom.getRoomName().toUpperCase());
+        System.out.println();
 
-       // to do - validation for booked seats
+        for (String rowNumber : reservationSeatsDetails.keySet()) {
+            System.out.println("ROW: " + rowNumber + ", ");
+            HashMap<String, Object> currentSeatNumber = (HashMap) reservationSeatsDetails.get(rowNumber);
+
+            for (String seatNumber : currentSeatNumber.keySet()) {
+                HashMap<String, Object> seatDetails = (HashMap) currentSeatNumber.get(seatNumber);
+                System.out.print("seat: " + seatNumber + ", ");
+                System.out.print(seatDetails.get("seatType") + ", ");
+                System.out.print(seatDetails.get("price") + ", ");
+                System.out.println();
+            }
+            System.out.println();
+        }
+        System.out.println("client name: " + this.client.getClientName());
+        System.out.println("email: " + this.client.getClientEmail());
+        System.out.println();
+        System.out.println("to pay: " + this.valueToPay);
+
+        System.out.println("------------------------------------------------------");
+        System.out.println();
+    }
 
 
-        for(String key1 : finalData.keySet()){
-            //System.out.println("keySeatNumber = " + key1);
+    protected void confirmReservation(){
 
+        this.valueToPay = 0;
 
-            for(int s = 0; s< seatsNo2.length ;s++){
+        for (String rowNumber : this.chossenSeatsPerRow.keySet()) {
+            String[] seatsNo2 = this.chossenSeatsPerRow.get(rowNumber);
 
-                //System.out.println("seatsNo A = " + seatsNo2[s]);
+            HashMap<String, Object> finalData = movieScreenig.getCinemaRoom().getRowSeatsData(rowNumber);
+            HashMap<String, Object> reservationSeatDetailsPerRow = new HashMap<>();
 
-                if(key1.equals(seatsNo2[s])){
+            for (String key1 : finalData.keySet()) {
 
-                    System.out.println("key1 = " + key1);
-                    System.out.println("seatsNo B = " + seatsNo2[s]);
+                for (int s = 0; s < seatsNo2.length; s++) {
 
-                    HashMap<String, Object > temp = (HashMap) finalData.get(key1);
+                    if (key1.equals(seatsNo2[s])) {
+                        HashMap<String, Object> temp = (HashMap) finalData.get(key1);
 
-
-                    temp.replace("isSeatReserved", true);
-                    //System.out.println(temp);
-                    HashMap<String, Object> reservationSeatDetailsPerRow = new HashMap<>();
-                    reservationSeatDetailsPerRow.put(key1, temp);
-
-                    // to fix!! wrong idea
-
-                    this.reservationSeatDetails.put(rowNumber, reservationSeatDetailsPerRow);
-
-                    //System.out.println("KEY END -------- ");
-                    //temp.clear();
+                        if((int)temp.get("seatKindOfReserved") == movieScreenig.getCinemaRoom().getStatusSeatIsNotReserved()) {
+                            temp.replace("seatKindOfReserved", movieScreenig.getCinemaRoom().getStatusSeatIsTemporarilyReserved());
+                            this.valueToPay = this.valueToPay + (double) temp.get("price");
+                            reservationSeatDetailsPerRow.put(key1, temp);
+                            this.reservationSeatsDetails.put(rowNumber, reservationSeatDetailsPerRow);
+                        }
+                        else{
+                            System.out.println("Seat " + key1 + " in row " + rowNumber + " is reserved.");
+                        }
+                    }
                 }
             }
         }
 
-        //System.out.println(finalData);
-        System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-    }
-
-    // to do - fix -> bookSeatsPerRow() - 72
-    protected void summariseReservationSeatsDetails(){
-        this.summarisedReservationSeatData = new HashMap<>();
-
-        for(String rowNumber : reservationSeatDetails.keySet()){
-            //System.out.println("key rowNumber = " + rowNumber);
-
-            HashMap<String, Object > currentSeatNumber = (HashMap) reservationSeatDetails.get(rowNumber);
-
-            for(String seatNumber : currentSeatNumber.keySet()){
-
-                //System.out.println("key seatNumber = " + seatNumber);
-
-            }
-            //System.out.println("------");
-        }
-
-
     }
 
 
-    protected void printCinemaRoomData(){
 
 
 
-    }
 }
+

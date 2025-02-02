@@ -3,10 +3,6 @@ import java.util.HashMap;
 public class Client {
 
     private HashMap<String, String> clientData;
-    //private String clientEmail;
-
-    //private String clientName;
-
 
     Client(){
         this.clientData = new HashMap<>();

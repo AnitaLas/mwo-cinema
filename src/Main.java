@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -29,6 +30,8 @@ public class Main {
         cinema1.setCinemaName("Kino Kraków");
         cinema1.setCinemaAddress("ul. nieIstnieje, 30-666 Kraków");
 
+        headquarter.addCinema(cinema1);
+
         CinemaRoom cinemaRoom1 = new CinemaRoom();
         cinemaRoom1.setRoomName("room 1");
         cinemaRoom1.createSeatsForOneRow(1,1);
@@ -49,35 +52,92 @@ public class Main {
 
 
         MovieScreenig ms1 = new MovieScreenig(headquarter.getMovieData("Bolek i Lolek"),
-                "2018-01-29T10:00:00", cinema1.getCinemaRoom("room 1"));
+                "2025-02-02T10:00:00", cinema1.getCinemaRoom("room 1"));
 
-        MovieScreenig ms2 = new MovieScreenig(headquarter.getMovieData("Moana"),
-                "2018-02-02T12:00:00", cinema1.getCinemaRoom("room 2"));
+        /*MovieScreenig ms2 = new MovieScreenig(headquarter.getMovieData("Moana"),
+                "2025-02-02", "12:00:00", cinema1.getCinemaRoom("room 2"));
 
         MovieScreenig ms3 = new MovieScreenig(headquarter.getMovieData("Bolek i Lolek"),
-                "2018-02-10T14:00:00", cinema1.getCinemaRoom("room 1"));
+                "2025-02-10","14:00:00", cinema1.getCinemaRoom("room 1"));*/
 
 
         cinema1.addMovieScreenigToCalendar(ms1);
-        cinema1.addMovieScreenigToCalendar(ms2);
+        //cinema1.addMovieScreenigToCalendar(ms2);
         //cinema1.addMovieScreenigToCalendar(ms3);
 
         //cinema1.printMovieScreeningData(ms1);
         //cinema1.printMovieScreeningData(ms2);
+        //cinema1.printMovieScreeningData("Bolek i Lolek");
+        cinema1.printMovieScreeningData("Bolek i Lolek");
+
+
+
+
 
         Client c1 = new Client();
-        c1.setClientEmail("bolek@gmail.com");
-        c1.setClientName("Bolek");
+        c1.setClientEmail("bolek1@gmail.com");
+        c1.setClientName("Bolek II");
+        headquarter.addClientToCollection(c1);
 
-        Reservation res1 = new Reservation();
-        res1.chooseMovieScreening(ms1);
-        res1.bookSeatsPerRow("2", "1, 2");
-        res1.bookSeatsPerRow("3", "2, 3");
+        Client c2 = new Client();
+        c2.setClientEmail("lolek2@gmail.com");
+        c2.setClientName("Lolek III");
+        headquarter.addClientToCollection(c2);
+
+        Reservation res1 = new Reservation(ms1);
+        //res1.chooseMovieScreening(ms1);
+        res1.chooseSeatsPerRow("2", "1,");
+        res1.chooseSeatsPerRow("4", "2, 3");
         res1.setClient(c1);
-        res1.summariseReservationSeatsDetails();
+        res1.confirmReservation();
+        headquarter.addReservationToCollection(res1);
+        //res1.printDocumentDetails();
+
+        //headquarter.printAllClientReservations(c1);
+        //System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
 
 
-        cinema1.printMovieScreeningData(ms1);
+        //Reservation res3 = new Reservation(ms2);
+        //res3.chooseMovieScreening(ms1);
+       // res3.chooseSeatsPerRow("2", "2,");
+        //res3.chooseSeatsPerRow("5", "4,5");
+       // res3.setClient(c1);
+       // res3.confirmReservation();
+        //headquarter.addReservationToCollection(res3);
+        //res3.printDocumentDetails();
+        //cinema1.printMovieScreeningData(ms1);
+        //headquarter.printAllClientReservations(c1);
+
+
+       // PurchaseDocument pd1 = new PurchaseDocument(res1);
+        //pd1.payForReservation(true, true);
+        //cinema1.printMovieScreeningData(ms1);
+
+        //PurchaseDocument pd2 = new PurchaseDocument(res3);
+        //pd2.payForReservation(true, true);
+        //cinema1.printMovieScreeningData(ms1);
+
+
+        //pd1.cancelReservation();
+        //cinema1.printMovieScreeningData(ms1);
+        //System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+        //headquarter.printAllClientReservations(c1);
+
+        //headquarter.printAllPendingClientReservations(c1);
+
+
+
+
+        //Reservation res2 = new Reservation();
+        //res2.chooseMovieScreening(ms1);
+        //res2.chooseSeatsPerRow("5", "3, 2");
+        //res2.setClient("gosc@gmail.com");
+       //res2.printDocumentDetails();
+
+
+
+
+        //cinema1.printMovieScreeningData(ms1);
         //cinema1.printMovieScreeningData(ms2);
 
         /*res1.chosseMovieScreening(ms2);
@@ -131,7 +191,8 @@ public class Main {
         System.out.println(">5: " + cinema1.close.toLocalTime());*/
 
 
-
+        //Double test = 22.29;
+        //System.out.println(test);
 
 
 

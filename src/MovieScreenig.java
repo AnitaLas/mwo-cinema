@@ -1,31 +1,31 @@
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class MovieScreenig {
 
-    private List<Object> screenigData;
+    private HashMap<String, Object> screenigData;
     protected Movie movieData;
-    protected String dateAndHourMovieScreening;
-    protected  CinemaRoom cinemaRoom;
+    private LocalDateTime dateAndTime;
+    protected  CinemaRoom cinemaRoom;;
 
-
-    MovieScreenig(Movie movieData, String dateAndHourMovieScreening, CinemaRoom cinemaRoom){
+    MovieScreenig(Movie movieData, String dateAndTime, CinemaRoom cinemaRoom){
         this.movieData = movieData;
-        this.dateAndHourMovieScreening= dateAndHourMovieScreening;
+        this.dateAndTime= LocalDateTime.parse(dateAndTime);
         this.cinemaRoom = cinemaRoom;
     }
 
-    protected  List<Object>  getMovieScreeningData(){
-        this.screenigData = new ArrayList<>();
-        this.screenigData.add(movieData);
-        this.screenigData.add(dateAndHourMovieScreening);
-        this.screenigData.add(cinemaRoom);
+    protected HashMap<String, Object>  getMovieScreeningData(){
+        this.screenigData = new HashMap<>();
+        this.screenigData.put("movieData", movieData);
+        this.screenigData.put("dateAndTime", dateAndTime);
+        this.screenigData.put("cinemaRoom", cinemaRoom);
         return screenigData;
     }
 
-    protected List< Object> getScreenigData(){
+    protected HashMap<String, Object> getScreenigData(){
         return this.screenigData;
     }
 
@@ -33,8 +33,16 @@ public class MovieScreenig {
         return this.movieData;
     }
 
-    protected String getDateAndHourMovieScreening() {
-        return this.dateAndHourMovieScreening;
+    protected LocalDateTime getDateAndTime(){
+        return this.dateAndTime;
+    }
+
+    protected String getMovieScreenigDate() {
+        return (String)this.screenigData.get("movieScreenigDate");
+    }
+
+    protected String getMovieScreenigHour() {
+        return (String)this.screenigData.get("movieScreenigHour");
     }
 
     protected CinemaRoom getCinemaRoom() {
@@ -42,10 +50,10 @@ public class MovieScreenig {
     }
 
     protected void printDateAndHourMovieScreening(){
-        LocalDateTime date = LocalDateTime.parse( this.dateAndHourMovieScreening);
+        LocalDateTime date = this.dateAndTime;
         //date.getDayOfWeek()
         System.out.println("  "  + date.getDayOfWeek() + " " + date.getDayOfMonth() + " " + date.getMonth()
-        + ",  " + date.getHour() +  ":" + date.getMinute());
+        + ",  " + dateAndTime.getHour() +  ":" + dateAndTime.getMinute());
 
     }
 

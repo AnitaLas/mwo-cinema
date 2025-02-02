@@ -24,7 +24,6 @@ public class Movie {
        return this.movieDetails.get("movieTitle");
     }
 
-
     protected void setMovieKind(String movieKind){
         this.movieDetails.put("movieKind", movieKind);
     }
@@ -47,15 +46,7 @@ public class Movie {
         System.out.println("  "  + this.movieDetails.get("movieTitle"));
         System.out.println("  "  + this.movieDetails.get("movieKind") + ", "
                 + this.movieDetails.get("movieLanguage"));
-
     }
-
-
-
-
-
-
-
 
 
 }

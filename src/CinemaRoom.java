@@ -7,17 +7,20 @@ public class CinemaRoom {
 
     private String cinemaRoomName;
     private String ansiGreen = "\033[0;32m";
+    private String ansiYellow = "\033[33m";
     private String ansiRed = "\033[31m";
     private String ansiRest = "\u001B[0m";
 
+    private int seatIsNotReserved = 0;
+    private int seatIsReserved = 1;
+    private int seatIsTemporarilyReserved = 2;
+
+    //protected Cinema cinema;
+
     private HashMap<String, Object> seatDetails;
     private HashMap<String, Object> seatNumber;
-
-    //      key1 = roomName, key2 = rowNummber, key3 = seatNumber, Key4 = seatDetails(parName, parValue)
-    // v1 w private HashMap<String,  HashMap<String,    HashMap<String,    HashMap<String, Object >>>> cinemaRoomData;
-   // private HashMap<String,    HashMap<String,    HashMap<String, Object >>> cinemaRoomData;
-
     private HashMap < String, Object> rowSeatsData;
+    private HashMap<String, String> cinemaData;
 
     CinemaRoom(){
         this.rowSeatsData = new HashMap<>();
@@ -37,10 +40,33 @@ public class CinemaRoom {
         return this.cinemaRoomName;
     }
 
+    protected void setCinemaData(HashMap<String, String> cinemaData){
+        this.cinemaData = cinemaData;
+    }
+
+    protected String getCinemaName(){
+        return this.cinemaData.get("cinemaName");
+    }
+
+    protected String getCinemaAddress(){
+        return this.cinemaData.get("cinemaAddress");
+    }
+
+    protected int getStatusSeatIsTemporarilyReserved(){
+        return this.seatIsTemporarilyReserved;
+    }
+
+    protected int getStatusSeatIsNotReserved(){
+        return this.seatIsNotReserved;
+    }
+
+    protected int getStatusSeatIsReserved(){
+        return this.seatIsReserved;
+    }
 
     private HashMap<String, Object> createSeatDetails(String seatType){
         HashMap<String, Object> seatDetails = new HashMap<>();
-        seatDetails.put("isSeatReserved", false);
+        seatDetails.put("seatKindOfReserved", seatIsNotReserved);
         seatDetails.put("seatType", seatType);
         seatDetails.put("price", 29.99);
         return seatDetails;
@@ -65,23 +91,22 @@ public class CinemaRoom {
     }
 
     protected void printCinemaRoomData(){
-
         System.out.println();
         System.out.println("       " + cinemaRoomName.toUpperCase());
 
         for(String keyRowNumber : rowSeatsData.keySet()){
-
             System.out.print("row " + keyRowNumber + " : ");
             HashMap<String, Object > currentSeatNumber = (HashMap)rowSeatsData.get(keyRowNumber);
 
             for(String keySeatNumber : currentSeatNumber.keySet()){
-
                 HashMap<String, Object >  currentSeatDetails = (HashMap)currentSeatNumber.get(keySeatNumber);
-                boolean isSeatReserved = (boolean)currentSeatDetails.get("isSeatReserved");
+                int seatKindOfReserved = (int)currentSeatDetails.get("seatKindOfReserved");
 
-                // to do - remove isSeatReserved
-                if(isSeatReserved == false)
-                    System.out.print(" " + ansiGreen + keySeatNumber + ansiRest +isSeatReserved + "  |  ");
+                // to do - remove seatKindOfReserved
+                if(seatKindOfReserved == seatIsNotReserved)
+                    System.out.print(" " + ansiGreen + keySeatNumber + ansiRest +seatKindOfReserved + "  |  ");
+                else if(seatKindOfReserved == seatIsTemporarilyReserved)
+                    System.out.print(" " + ansiYellow + keySeatNumber + ansiRest +seatKindOfReserved + "  |  ");
                 else
                 System.out.print(" " + ansiRed + keySeatNumber + ansiRest + "  |  ");
             }
