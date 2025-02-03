@@ -19,6 +19,10 @@ public class PurchaseDocument{
         this.finalReservationSeatsDetails = reservation.getReservationSeatsDetails();
     }
 
+    protected Client getClient(){
+        return this.reservation.getClient();
+    }
+
     protected void payForReservation(boolean doYouWantToPayForReservation, boolean isPaymentForReservationWasSuccessful){
 
         if(doYouWantToPayForReservation == true){
@@ -27,6 +31,7 @@ public class PurchaseDocument{
 
                 setStatusSeatIsReserved();
                 this.paymentStatus = reservationPaid;
+                //sentEmailToClient();
             }
             else {
                 System.out.println();
@@ -40,7 +45,8 @@ public class PurchaseDocument{
 
     protected void sentEmailToClient() {
         System.out.println();
-        System.out.println("Purchase document was sent to email: " + this.reservation.getClient().getClientEmail());
+       // System.out.println("Purchase document was sent to email: " + this.reservation.getClient().getClientEmail());
+        System.out.println("Purchase document was sent to email: " + getClient().getClientEmail());
     }
 
     private void changeSeatsStatus( int currentStatus, int newStatus) {
@@ -63,8 +69,8 @@ public class PurchaseDocument{
     }
 
     private void setStatusSeatIsReserved() {
-        this.seatIsTemporarilyReserved = reservation.movieScreenig.getCinemaRoom().getStatusSeatIsTemporarilyReserved();;
-        this.seatIsReserved = reservation.movieScreenig.getCinemaRoom().getStatusSeatIsReserved();
+        this.seatIsTemporarilyReserved = reservation.getMovieScreenig() .getCinemaRoom().getStatusSeatIsTemporarilyReserved();;
+        this.seatIsReserved = reservation.getMovieScreenig() .getCinemaRoom().getStatusSeatIsReserved();
         changeSeatsStatus(seatIsTemporarilyReserved, seatIsReserved);
     }
 
@@ -73,11 +79,43 @@ public class PurchaseDocument{
     }
 
     protected void cancelReservation(){
-        this.seatIsNotReserved = reservation.movieScreenig.getCinemaRoom().getStatusSeatIsNotReserved();
+        this.seatIsNotReserved = reservation.getMovieScreenig() .getCinemaRoom().getStatusSeatIsNotReserved();
         changeSeatsStatus(seatIsReserved, seatIsNotReserved);
         this.paymentStatus = refundReservationPayment;
         System.out.println("Reservation was cancel.");
     }
 
+    protected void printReservationDetails() {
+        System.out.println("------------------------------------------------------");
+        System.out.println("   PURCHASE DOCUMENT DETAILS   ");
+        System.out.println();
+        System.out.println("Cinema: " + reservation.getMovieScreenig().getCinemaRoom().getCinemaName());
+        System.out.println("Address: " + reservation.getMovieScreenig().getCinemaRoom().getCinemaAddress());
+        System.out.println();
+        System.out.println("movie title: " + reservation.getMovieScreenig().getMovieData().getMovieTitle());
+        System.out.println("room name: " + reservation.getMovieScreenig().getCinemaRoom().getRoomName().toUpperCase());
+        System.out.println();
+
+        for (String rowNumber : reservation.getReservationSeatsDetails().keySet()) {
+            System.out.println("ROW: " + rowNumber + ", ");
+            HashMap<String, Object> currentSeatNumber = (HashMap) reservation.getReservationSeatsDetails().get(rowNumber);
+
+            for (String seatNumber : currentSeatNumber.keySet()) {
+                HashMap<String, Object> seatDetails = (HashMap) currentSeatNumber.get(seatNumber);
+                System.out.print("seat: " + seatNumber + ", ");
+                System.out.print(seatDetails.get("seatType") + ", ");
+                System.out.print(seatDetails.get("price") + ", ");
+                System.out.println();
+            }
+            System.out.println();
+        }
+        System.out.println("client name: " + reservation.getClient().getClientName());
+        System.out.println("email: " + reservation.getClient().getClientEmail());
+        System.out.println();
+        System.out.println("paid: " + reservation.getValueToPay());
+
+        System.out.println("------------------------------------------------------");
+        System.out.println();
+    }
 
 }

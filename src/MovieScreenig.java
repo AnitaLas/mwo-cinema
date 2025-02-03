@@ -1,4 +1,4 @@
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,20 +7,21 @@ import java.util.List;
 public class MovieScreenig {
 
     private HashMap<String, Object> screenigData;
-    protected Movie movieData;
-    private LocalDateTime dateAndTime;
-    protected  CinemaRoom cinemaRoom;;
+    private Movie movieData;
+    private LocalDate date;
+    private LocalTime time;
+    private  CinemaRoom cinemaRoom;;
 
-    MovieScreenig(Movie movieData, String dateAndTime, CinemaRoom cinemaRoom){
+    MovieScreenig(Movie movieData, String date,  String time, CinemaRoom cinemaRoom){
         this.movieData = movieData;
-        this.dateAndTime= LocalDateTime.parse(dateAndTime);
+        this.date= LocalDate.parse(date);
+        this.time= LocalTime.parse(time);
         this.cinemaRoom = cinemaRoom;
     }
 
     protected HashMap<String, Object>  getMovieScreeningData(){
         this.screenigData = new HashMap<>();
         this.screenigData.put("movieData", movieData);
-        this.screenigData.put("dateAndTime", dateAndTime);
         this.screenigData.put("cinemaRoom", cinemaRoom);
         return screenigData;
     }
@@ -33,12 +34,12 @@ public class MovieScreenig {
         return this.movieData;
     }
 
-    protected LocalDateTime getDateAndTime(){
-        return this.dateAndTime;
+    protected LocalDate getDate(){
+        return this.date;
     }
 
-    protected String getMovieScreenigDate() {
-        return (String)this.screenigData.get("movieScreenigDate");
+    protected LocalTime getTime(){
+        return this.time;
     }
 
     protected String getMovieScreenigHour() {
@@ -50,11 +51,25 @@ public class MovieScreenig {
     }
 
     protected void printDateAndHourMovieScreening(){
-        LocalDateTime date = this.dateAndTime;
-        //date.getDayOfWeek()
-        System.out.println("  "  + date.getDayOfWeek() + " " + date.getDayOfMonth() + " " + date.getMonth()
-        + ",  " + dateAndTime.getHour() +  ":" + dateAndTime.getMinute());
+        String movieStartMinute = (this.time.getMinute() < 10) ? ("0" + this.time.getMinute()) : Integer.toString(this.time.getMinute());
 
+        System.out.println("  "  + this.date.getDayOfWeek() + ", " + this.date.getDayOfMonth() + " " + this.date.getMonth()
+                + ", "  + this.time.getHour()+ ":" + movieStartMinute);
+    }
+
+    protected void printMovieScreeningData(){
+
+        System.out.println(" ");
+        System.out.println("------------------------------------------------------");
+        // print movie data
+        this.movieData.printMovieData();
+
+        // print date and hour
+        printDateAndHourMovieScreening();
+
+        // print room with reservation
+        cinemaRoom.printCinemaRoomData();
+        System.out.println("------------------------------------------------------");
     }
 
 

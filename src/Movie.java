@@ -28,8 +28,16 @@ public class Movie {
         this.movieDetails.put("movieKind", movieKind);
     }
 
-    protected void setmovieGenre(String movieGenre){
+    protected String getMovieKind(){
+        return this.movieDetails.get("movieKind");
+    }
+
+    protected void setMovieGenre(String movieGenre){
         this.movieDetails.put("movieGenre", movieGenre);;
+    }
+
+    protected String getMovieGenre() {
+        return this.movieDetails.get("movieGenre");
     }
 
     protected void setMovieTime(String movieTime){

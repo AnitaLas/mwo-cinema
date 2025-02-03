@@ -2,7 +2,7 @@ import java.util.HashMap;
 
 public class Reservation {
 
-    protected MovieScreenig movieScreenig;
+    private MovieScreenig movieScreenig;
     private Client client;
     private double valueToPay;
     private HashMap<String, Object> reservationSeatsDetails;
@@ -28,6 +28,14 @@ public class Reservation {
         return this.client;
     }
 
+    protected double getValueToPay(){
+        return this.valueToPay;
+    }
+
+    protected MovieScreenig getMovieScreenig() {
+        return this.movieScreenig;
+    }
+
     public HashMap<String, Object> getReservationSeatsDetails(){
         return this.reservationSeatsDetails;
     }
@@ -37,40 +45,6 @@ public class Reservation {
         String[] seatsNo2 = seatsNo1.split(",");
         this.chossenSeatsPerRow.put(rowNumber, seatsNo2);
     }
-
-    protected void printDocumentDetails() {
-        System.out.println("------------------------------------------------------");
-        System.out.println("   RESERVATION DETAILS   ");
-        System.out.println();
-        System.out.println("Cinema: " + movieScreenig.cinemaRoom.getCinemaName());
-        System.out.println("Address: " + movieScreenig.cinemaRoom.getCinemaAddress());
-        System.out.println();
-        System.out.println("movie title: " + movieScreenig.movieData.getMovieTitle());
-        System.out.println("room name: " + movieScreenig.cinemaRoom.getRoomName().toUpperCase());
-        System.out.println();
-
-        for (String rowNumber : reservationSeatsDetails.keySet()) {
-            System.out.println("ROW: " + rowNumber + ", ");
-            HashMap<String, Object> currentSeatNumber = (HashMap) reservationSeatsDetails.get(rowNumber);
-
-            for (String seatNumber : currentSeatNumber.keySet()) {
-                HashMap<String, Object> seatDetails = (HashMap) currentSeatNumber.get(seatNumber);
-                System.out.print("seat: " + seatNumber + ", ");
-                System.out.print(seatDetails.get("seatType") + ", ");
-                System.out.print(seatDetails.get("price") + ", ");
-                System.out.println();
-            }
-            System.out.println();
-        }
-        System.out.println("client name: " + this.client.getClientName());
-        System.out.println("email: " + this.client.getClientEmail());
-        System.out.println();
-        System.out.println("to pay: " + this.valueToPay);
-
-        System.out.println("------------------------------------------------------");
-        System.out.println();
-    }
-
 
     protected void confirmReservation(){
 
@@ -106,7 +80,38 @@ public class Reservation {
     }
 
 
+    protected void printReservationDetails() {
+        System.out.println("------------------------------------------------------");
+        System.out.println("   RESERVATION DETAILS   ");
+        System.out.println();
+        System.out.println("Cinema: " + movieScreenig.getCinemaRoom().getCinemaName());
+        System.out.println("Address: " + movieScreenig.getCinemaRoom().getCinemaAddress());
+        System.out.println();
+        System.out.println("movie title: " + movieScreenig.getMovieData().getMovieTitle());
+        System.out.println("room name: " + movieScreenig.getCinemaRoom().getRoomName().toUpperCase());
+        System.out.println();
 
+        for (String rowNumber : reservationSeatsDetails.keySet()) {
+            System.out.println("ROW: " + rowNumber + ", ");
+            HashMap<String, Object> currentSeatNumber = (HashMap) reservationSeatsDetails.get(rowNumber);
+
+            for (String seatNumber : currentSeatNumber.keySet()) {
+                HashMap<String, Object> seatDetails = (HashMap) currentSeatNumber.get(seatNumber);
+                System.out.print("seat: " + seatNumber + ", ");
+                System.out.print(seatDetails.get("seatType") + ", ");
+                System.out.print(seatDetails.get("price") + ", ");
+                System.out.println();
+            }
+            System.out.println();
+        }
+        System.out.println("client name: " + this.client.getClientName());
+        System.out.println("email: " + this.client.getClientEmail());
+        System.out.println();
+        System.out.println("to pay: " + this.valueToPay);
+
+        System.out.println("------------------------------------------------------");
+        System.out.println();
+    }
 
 
 }
