@@ -15,8 +15,7 @@ public class Reservation {
     }
 
     protected void setClient(String clientEmail) {
-        this.client = new Client();
-        this.client.setClientEmail(clientEmail);
+        this.client = new Client(clientEmail);
         this.client.setClientName(" --- ");
     }
 
@@ -28,7 +27,7 @@ public class Reservation {
         return this.client;
     }
 
-    protected double getValueToPay(){
+    protected double getValueToPay() {
         return this.valueToPay;
     }
 
@@ -36,7 +35,7 @@ public class Reservation {
         return this.movieScreenig;
     }
 
-    public HashMap<String, Object> getReservationSeatsDetails(){
+    public HashMap<String, Object> getReservationSeatsDetails() {
         return this.reservationSeatsDetails;
     }
 
@@ -46,7 +45,7 @@ public class Reservation {
         this.chossenSeatsPerRow.put(rowNumber, seatsNo2);
     }
 
-    protected void confirmReservation(){
+    protected void confirmReservation() {
 
         this.valueToPay = 0;
 
@@ -63,22 +62,19 @@ public class Reservation {
                     if (key1.equals(seatsNo2[s])) {
                         HashMap<String, Object> temp = (HashMap) finalData.get(key1);
 
-                        if((int)temp.get("seatKindOfReserved") == movieScreenig.getCinemaRoom().getStatusSeatIsNotReserved()) {
+                        if ((int) temp.get("seatKindOfReserved") == movieScreenig.getCinemaRoom().getStatusSeatIsNotReserved()) {
                             temp.replace("seatKindOfReserved", movieScreenig.getCinemaRoom().getStatusSeatIsTemporarilyReserved());
                             this.valueToPay = this.valueToPay + (double) temp.get("price");
                             reservationSeatDetailsPerRow.put(key1, temp);
                             this.reservationSeatsDetails.put(rowNumber, reservationSeatDetailsPerRow);
-                        }
-                        else{
+                        } else {
                             System.out.println("Seat " + key1 + " in row " + rowNumber + " is reserved.");
                         }
                     }
                 }
             }
         }
-
     }
-
 
     protected void printReservationDetails() {
         System.out.println("------------------------------------------------------");
@@ -112,7 +108,5 @@ public class Reservation {
         System.out.println("------------------------------------------------------");
         System.out.println();
     }
-
-
 }
 

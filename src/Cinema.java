@@ -1,5 +1,4 @@
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.*;
 
@@ -15,85 +14,85 @@ public class Cinema {
     private List<MovieScreenig> moviesToScreening;
 
 
-    Cinema(){
+    Cinema(String cinemaName) {
         this.cinemaRooms = new HashMap<>();
         this.moovieCalendar = new ArrayList<>();
         this.cinemaData = new HashMap<>();
-    }
-
-    // to do - String cinemaName -> Cinema(){}
-    protected void setCinemaName(String cinemaName){
         this.cinemaData.put("cinemaName", cinemaName);
     }
 
-    protected String getCinemaName(){
+   /* protected void setCinemaName(String cinemaName){
+         this.cinemaData.put("cinemaName", cinemaName);
+    }*/
+
+    protected String getCinemaName() {
         return this.cinemaData.get("cinemaName");
     }
 
-    protected void setCinemaAddress(String cinemaAddress){
+    protected void setCinemaAddress(String cinemaAddress) {
         this.cinemaData.put("cinemaAddress", cinemaAddress);
     }
 
-    protected void addCinemaRoom(CinemaRoom cinaemaRoom){
+    protected void addCinemaRoom(CinemaRoom cinaemaRoom) {
         cinaemaRoom.setCinemaData(this.cinemaData);
-        this.cinemaRooms.put(cinaemaRoom.getRoomName(),cinaemaRoom);
+        this.cinemaRooms.put(cinaemaRoom.getRoomName(), cinaemaRoom);
     }
 
-    protected CinemaRoom getCinemaRoom(String cinemaRoomName){
+    protected CinemaRoom getCinemaRoom(String cinemaRoomName) {
         return this.cinemaRooms.get(cinemaRoomName);
     }
 
-    protected void addMovieScreenigToCalendar(MovieScreenig movieScreenigData){
+    protected void addMovieScreenigToCalendar(MovieScreenig movieScreenigData) {
         moovieCalendar.add(movieScreenigData);
     }
 
-    protected  List<MovieScreenig> getMovieScreenig(){
+    protected List<MovieScreenig> getMovieScreenig() {
         LocalDate dateNow = LocalDate.now();
         LocalTime timeNow = LocalTime.now();
         this.moviesToScreening = new ArrayList<>();
 
-        for(MovieScreenig ms : this.moovieCalendar){
+        for (MovieScreenig ms : this.moovieCalendar) {
             int dateCurrent = ms.getDate().compareTo(dateNow);
             int dateFuture = ms.getDate().compareTo(dateNow.plusDays(7));
 
-            if(dateCurrent >= 0 && dateFuture <= 0){
+            if (dateCurrent >= 0 && dateFuture <= 0) {
                 int timeCurrent = ms.getTime().compareTo(timeNow);
                 int timeFuture = ms.getTime().compareTo(LocalTime.parse("23:59:59"));
 
-                if(dateCurrent == 0 && (timeFuture <= 0 && timeCurrent >= 0))
+                if (dateCurrent == 0 && (timeFuture <= 0 && timeCurrent >= 0))
                     this.moviesToScreening.add(ms);
 
-                if(dateCurrent > 0 && (timeFuture <= 0))
+                if (dateCurrent > 0 && (timeFuture <= 0))
                     this.moviesToScreening.add(ms);
             }
         }
         return this.moviesToScreening;
     }
 
-   protected  List<MovieScreenig> getMovieScreenig(String movieTitle){
+    protected List<MovieScreenig> getMovieScreenig(String movieTitle) {
         LocalDate dateNow = LocalDate.now();
         LocalTime timeNow = LocalTime.now();
         this.moviesToScreening = new ArrayList<>();
 
-        for(MovieScreenig ms : this.moovieCalendar){
+        for (MovieScreenig ms : this.moovieCalendar) {
             int dateCurrent = ms.getDate().compareTo(dateNow);
             int dateFuture = ms.getDate().compareTo(dateNow.plusDays(7));
 
-            if(dateCurrent >= 0 && dateFuture <= 0){
+            if (dateCurrent >= 0 && dateFuture <= 0) {
                 int timeCurrent = ms.getTime().compareTo(timeNow);
                 int timeFuture = ms.getTime().compareTo(LocalTime.parse("23:59:59"));
 
-                if(dateCurrent == 0 && (timeFuture <= 0 && timeCurrent >= 0)){
-                    if((ms.getMovieData().getMovieTitle()).equals(movieTitle))
+                if (dateCurrent == 0 && (timeFuture <= 0 && timeCurrent >= 0)) {
+                    if ((ms.getMovieData().getMovieTitle()).equals(movieTitle))
                         this.moviesToScreening.add(ms);
                 }
 
-                if(dateCurrent > 0 && (timeFuture <= 0 )){
-                    if((ms.getMovieData().getMovieTitle()).equals(movieTitle))
+                if (dateCurrent > 0 && (timeFuture <= 0)) {
+                    if ((ms.getMovieData().getMovieTitle()).equals(movieTitle))
                         this.moviesToScreening.add(ms);
                 }
             }
-       }
+        }
         return this.moviesToScreening;
     }
 
@@ -102,24 +101,24 @@ public class Cinema {
         LocalTime timeNow = LocalTime.now();
         this.moviesToScreening = new LinkedList<>();
 
-        for(MovieScreenig ms : this.moovieCalendar){
+        for (MovieScreenig ms : this.moovieCalendar) {
             int dateCurrent = ms.getDate().compareTo(dateNow);
             int dateFuture = ms.getDate().compareTo(dateNow.plusDays(7));
 
-            if(dateCurrent >= 0 && dateFuture <= 0){
+            if (dateCurrent >= 0 && dateFuture <= 0) {
                 int timeCurrent = ms.getTime().compareTo(timeNow);
                 int timeFuture = ms.getTime().compareTo(LocalTime.parse("23:59:59"));
 
-                if(dateCurrent == 0 && (timeFuture <= 0 && timeCurrent >= 0)){
-                    if((ms.getMovieData().getMovieTitle()).equals(movieTitle)){
-                        if(ms.getMovieData().getMovieKind().equals(movieKind))
+                if (dateCurrent == 0 && (timeFuture <= 0 && timeCurrent >= 0)) {
+                    if ((ms.getMovieData().getMovieTitle()).equals(movieTitle)) {
+                        if (ms.getMovieData().getMovieKind().equals(movieKind))
                             this.moviesToScreening.add(ms);
                     }
                 }
 
-                if(dateCurrent > 0 && (timeFuture <= 0)){
-                    if((ms.getMovieData().getMovieTitle()).equals(movieTitle)){
-                        if(ms.getMovieData().getMovieKind().equals(movieKind))
+                if (dateCurrent > 0 && (timeFuture <= 0)) {
+                    if ((ms.getMovieData().getMovieTitle()).equals(movieTitle)) {
+                        if (ms.getMovieData().getMovieKind().equals(movieKind))
                             this.moviesToScreening.add(ms);
                     }
                 }
@@ -133,76 +132,62 @@ public class Cinema {
         LocalTime timeNow = LocalTime.now();
         this.moviesToScreening = new LinkedList<>();
 
-        for(MovieScreenig ms : this.moovieCalendar){
+        for (MovieScreenig ms : this.moovieCalendar) {
             int dateCurrent = ms.getDate().compareTo(dateNow);
             int dateFuture = ms.getDate().compareTo(dateNow.plusDays(7));
 
-            if(dateCurrent >= 0 && dateFuture <= 0){
-                int timeCurrent = ms.getTime().compareTo(timeNow);
-                int timeFuture = ms.getTime().compareTo(LocalTime.parse("23:59:59"));
+            if (dateCurrent >= 0 && dateFuture <= 0) {
+                if(ms.getDate().compareTo(LocalDate.parse(movieDate)) == 0){
+                    int timeCurrent = ms.getTime().compareTo(timeNow);
+                    int timeFuture = ms.getTime().compareTo(LocalTime.parse("23:59:59"));
 
-
-                // to do movie by date and time
-
-
-                if(dateCurrent == 0 && (timeFuture <= 0 && timeCurrent >= 0)){
-                    if((ms.getMovieData().getMovieTitle()).equals(movieTitle)){
-
-                            this.moviesToScreening.add(ms);
-                    }
-                }
-
-                if(dateCurrent > 0 && (timeFuture <= 0 )){
-                    if((ms.getMovieData().getMovieTitle()).equals(movieTitle)){
-
-                            this.moviesToScreening.add(ms);
+                    if (dateCurrent == 0 && (timeFuture <= 0 && timeCurrent >= 0)) {
+                        if(ms.getTime().compareTo(LocalTime.parse(movieTime)) >= 0){
+                            if ((ms.getMovieData().getMovieTitle()).equals(movieTitle))
+                                this.moviesToScreening.add(ms);
+                        }
                     }
 
+                    if (dateCurrent > 0 && (timeFuture <= 0)) {
+                        if(ms.getTime().compareTo(LocalTime.parse(movieTime)) >= 0){
+                            if ((ms.getMovieData().getMovieTitle()).equals(movieTitle))
+                                this.moviesToScreening.add(ms);
+                        }
+                    }
                 }
+                
             }
         }
         return this.moviesToScreening;
     }
 
-    protected void printMovieScreeningData(){
+    protected void printMovieScreeningData() {
         getMovieScreenig();
-        for(MovieScreenig ms : this.moviesToScreening){
+        for (MovieScreenig ms : this.moviesToScreening) {
             ms.printMovieScreeningData();
         }
     }
 
-    protected void printMovieScreeningData(String movieTitle){
+    protected void printMovieScreeningData(String movieTitle) {
         getMovieScreenig(movieTitle);
-        for(MovieScreenig ms : this.moviesToScreening){
-                ms.printMovieScreeningData();
+        for (MovieScreenig ms : this.moviesToScreening) {
+            ms.printMovieScreeningData();
         }
     }
 
-    protected void printMovieScreeningData(String movieTitle, String movieKind){
+    protected void printMovieScreeningData(String movieTitle, String movieKind) {
         getMovieScreenig(movieTitle, movieKind);
-        for(MovieScreenig ms : this.moviesToScreening){
+        for (MovieScreenig ms : this.moviesToScreening) {
             ms.printMovieScreeningData();
         }
     }
 
-    protected void printMovieScreeningData(String movieTitle, String movieDate, String movieTime){
+    protected void printMovieScreeningData(String movieTitle, String movieDate, String movieTime) {
         getMovieScreenig(movieTitle, movieDate, movieTime);
-        for(MovieScreenig ms : this.moviesToScreening){
+        for (MovieScreenig ms : this.moviesToScreening) {
             ms.printMovieScreeningData();
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

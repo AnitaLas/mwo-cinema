@@ -4,25 +4,25 @@ public class Client {
 
     private HashMap<String, String> clientData;
 
-    Client(){
+    Client(String clientEmail) {
         this.clientData = new HashMap<>();
-    }
-
-    protected void setClientEmail( String clientEmail){
         this.clientData.put("clientEmail", clientEmail);
     }
 
-    protected void setClientName( String clientName){
+    /*protected void setClientEmail(String clientEmail) {
+        this.clientData.put("clientEmail", clientEmail);
+    }*/
+
+    protected void setClientName(String clientName) {
         this.clientData.put("clientName", clientName);
     }
 
-    protected String getClientEmail(){
+    protected String getClientEmail() {
         return this.clientData.get("clientEmail");
     }
 
-    protected String getClientName(){
+    protected String getClientName() {
         return this.clientData.get("clientName");
     }
-
 
 }

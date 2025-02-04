@@ -1,6 +1,6 @@
 import java.util.HashMap;
 
-public class PurchaseDocument{
+public class PurchaseDocument {
 
     private Reservation reservation;
     private int paymentStatus;
@@ -12,54 +12,45 @@ public class PurchaseDocument{
     private int seatIsReserved;
     private int seatIsTemporarilyReserved;
 
-
-    PurchaseDocument(Reservation reservation){
+    PurchaseDocument(Reservation reservation) {
         this.paymentStatus = reservationNotPaid;
         this.reservation = reservation;
         this.finalReservationSeatsDetails = reservation.getReservationSeatsDetails();
     }
 
-    protected Client getClient(){
+    protected Client getClient() {
         return this.reservation.getClient();
     }
 
-    protected void payForReservation(boolean doYouWantToPayForReservation, boolean isPaymentForReservationWasSuccessful){
-
-        if(doYouWantToPayForReservation == true){
-
-            if(isPaymentForReservationWasSuccessful == true){
-
+    protected void payForReservation(boolean doYouWantToPayForReservation, boolean isPaymentForReservationWasSuccessful) {
+        if (doYouWantToPayForReservation == true) {
+            if (isPaymentForReservationWasSuccessful == true) {
                 setStatusSeatIsReserved();
                 this.paymentStatus = reservationPaid;
                 //sentEmailToClient();
-            }
-            else {
+            } else {
                 System.out.println();
                 System.out.println("Payment for reservation end with error. Please try one more time.");
             }
-        }
-        else {
+        } else {
             setStatusSeatIsNotReserved();
         }
     }
 
     protected void sentEmailToClient() {
         System.out.println();
-       // System.out.println("Purchase document was sent to email: " + this.reservation.getClient().getClientEmail());
         System.out.println("Purchase document was sent to email: " + getClient().getClientEmail());
     }
 
-    private void changeSeatsStatus( int currentStatus, int newStatus) {
-
+    private void changeSeatsStatus(int currentStatus, int newStatus) {
         for (String rowNumber : this.finalReservationSeatsDetails.keySet()) {
-            HashMap<String, Object> seatsNumber = (HashMap)this.finalReservationSeatsDetails.get(rowNumber);
-
+            HashMap<String, Object> seatsNumber = (HashMap) this.finalReservationSeatsDetails.get(rowNumber);
             HashMap<String, Object> reservationSeatDetailsPerRow = new HashMap<>();
 
             for (String seatNumber : seatsNumber.keySet()) {
-                HashMap<String, Object> seatDetails = (HashMap)seatsNumber.get(seatNumber);
+                HashMap<String, Object> seatDetails = (HashMap) seatsNumber.get(seatNumber);
 
-                if ((int)seatDetails.get("seatKindOfReserved") == currentStatus) {
+                if ((int) seatDetails.get("seatKindOfReserved") == currentStatus) {
                     seatDetails.replace("seatKindOfReserved", newStatus);
                     reservationSeatDetailsPerRow.put(seatNumber, seatDetails);
                     this.finalReservationSeatsDetails.put(rowNumber, reservationSeatDetailsPerRow);
@@ -69,8 +60,9 @@ public class PurchaseDocument{
     }
 
     private void setStatusSeatIsReserved() {
-        this.seatIsTemporarilyReserved = reservation.getMovieScreenig() .getCinemaRoom().getStatusSeatIsTemporarilyReserved();;
-        this.seatIsReserved = reservation.getMovieScreenig() .getCinemaRoom().getStatusSeatIsReserved();
+        this.seatIsTemporarilyReserved = reservation.getMovieScreenig().getCinemaRoom().getStatusSeatIsTemporarilyReserved();
+        ;
+        this.seatIsReserved = reservation.getMovieScreenig().getCinemaRoom().getStatusSeatIsReserved();
         changeSeatsStatus(seatIsTemporarilyReserved, seatIsReserved);
     }
 
@@ -78,8 +70,8 @@ public class PurchaseDocument{
         changeSeatsStatus(seatIsTemporarilyReserved, seatIsNotReserved);
     }
 
-    protected void cancelReservation(){
-        this.seatIsNotReserved = reservation.getMovieScreenig() .getCinemaRoom().getStatusSeatIsNotReserved();
+    protected void cancelReservation() {
+        this.seatIsNotReserved = reservation.getMovieScreenig().getCinemaRoom().getStatusSeatIsNotReserved();
         changeSeatsStatus(seatIsReserved, seatIsNotReserved);
         this.paymentStatus = refundReservationPayment;
         System.out.println("Reservation was cancel.");
@@ -117,5 +109,4 @@ public class PurchaseDocument{
         System.out.println("------------------------------------------------------");
         System.out.println();
     }
-
 }
