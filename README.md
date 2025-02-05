@@ -1,1 +1,1 @@
-![CinemaUML](https://github.com/user-attachments/assets/49af7092-42fb-432c-b525-d513c75bc9ca)
+![CinemaUML](https://github.com/user-attachments/assets/0dfe6361-415c-4669-ae0b-5cf3ec79e0df)
