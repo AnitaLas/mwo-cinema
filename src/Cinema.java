@@ -5,11 +5,13 @@ import java.util.*;
 public class Cinema {
 
     //private String cinemaName;
-    //private String cinemaAddress;
-    private HashMap<String, String> cinemaData;
+    private String cinemaAddress;
     //protected LocalDateTime open =  LocalDateTime.parse("2018-01-11T10:00:00");
     //protected LocalDateTime close =  LocalDateTime.parse("2018-01-11T23:30:00");
+    private HashMap<String, String> cinemaData;
     private HashMap<String, CinemaRoom> cinemaRooms;
+
+
     private List<MovieScreenig> moovieCalendar;
     private List<MovieScreenig> moviesToScreening;
 
@@ -21,21 +23,28 @@ public class Cinema {
         this.cinemaData.put("cinemaName", cinemaName);
     }
 
-   /* protected void setCinemaName(String cinemaName){
-         this.cinemaData.put("cinemaName", cinemaName);
-    }*/
+    protected  HashMap<String, String> getCinemaData(){
+        return this.cinemaData;
+    }
 
     protected String getCinemaName() {
         return this.cinemaData.get("cinemaName");
+    }
+
+    protected String gerCinemaAddress() {
+        return this.cinemaData.get("cinemaAddress");
     }
 
     protected void setCinemaAddress(String cinemaAddress) {
         this.cinemaData.put("cinemaAddress", cinemaAddress);
     }
 
-    protected void addCinemaRoom(CinemaRoom cinaemaRoom) {
-        cinaemaRoom.setCinemaData(this.cinemaData);
-        this.cinemaRooms.put(cinaemaRoom.getRoomName(), cinaemaRoom);
+    protected void addCinemaRoom(CinemaRoom cinemaRoom) {
+        this.cinemaRooms.put(cinemaRoom.getRoomName(), cinemaRoom);
+    }
+
+    protected void setCinemaData(HashMap<String, String> cinemaData) {
+        this.cinemaData = cinemaData;
     }
 
     protected CinemaRoom getCinemaRoom(String cinemaRoomName) {

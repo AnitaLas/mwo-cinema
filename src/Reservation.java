@@ -2,6 +2,7 @@ import java.util.HashMap;
 
 public class Reservation {
 
+    //private String reservationNumber;
     private MovieScreenig movieScreenig;
     private Client client;
     private double valueToPay;
@@ -80,10 +81,12 @@ public class Reservation {
         System.out.println("------------------------------------------------------");
         System.out.println("   RESERVATION DETAILS   ");
         System.out.println();
-        System.out.println("Cinema: " + movieScreenig.getCinemaRoom().getCinemaName());
-        System.out.println("Address: " + movieScreenig.getCinemaRoom().getCinemaAddress());
+        System.out.println("Cinema: " + movieScreenig.getCinemaRoom().getCinema().getCinemaName());
+        System.out.println("Address: " + movieScreenig.getCinemaRoom().getCinema().gerCinemaAddress());
         System.out.println();
         System.out.println("movie title: " + movieScreenig.getMovieData().getMovieTitle());
+        System.out.println("date: " + movieScreenig.getDate() + ", " + movieScreenig.getTime());
+        System.out.println();
         System.out.println("room name: " + movieScreenig.getCinemaRoom().getRoomName().toUpperCase());
         System.out.println();
 

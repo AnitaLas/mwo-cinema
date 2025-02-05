@@ -2,6 +2,7 @@ import java.util.HashMap;
 
 public class PurchaseDocument {
 
+    //private String purchaseDocumentNumber;
     private Reservation reservation;
     private int paymentStatus;
     private int reservationNotPaid = 0;
@@ -81,10 +82,12 @@ public class PurchaseDocument {
         System.out.println("------------------------------------------------------");
         System.out.println("   PURCHASE DOCUMENT DETAILS   ");
         System.out.println();
-        System.out.println("Cinema: " + reservation.getMovieScreenig().getCinemaRoom().getCinemaName());
-        System.out.println("Address: " + reservation.getMovieScreenig().getCinemaRoom().getCinemaAddress());
+        System.out.println("Cinema: " + reservation.getMovieScreenig().getCinemaRoom().getCinema().getCinemaName());
+        System.out.println("Address: " + reservation.getMovieScreenig().getCinemaRoom().getCinema().gerCinemaAddress());
         System.out.println();
         System.out.println("movie title: " + reservation.getMovieScreenig().getMovieData().getMovieTitle());
+        System.out.println("date: " + reservation.getMovieScreenig().getDate() + ", " + reservation.getMovieScreenig().getTime());
+        System.out.println();
         System.out.println("room name: " + reservation.getMovieScreenig().getCinemaRoom().getRoomName().toUpperCase());
         System.out.println();
 

@@ -13,11 +13,17 @@ public class CinemaRoom {
     private HashMap<String, Object> seatDetails;
     private HashMap<String, Object> seatNumber;
     private HashMap<String, Object> rowSeatsData;
-    private HashMap<String, String> cinemaData;
 
-    CinemaRoom(String cinemaRoomName) {
+    private Cinema cinema;
+
+    CinemaRoom(Cinema cinema, String cinemaRoomName) {
         this.rowSeatsData = new HashMap<>();
         this.cinemaRoomName = cinemaRoomName;
+        this.cinema = cinema;
+    }
+
+    protected Cinema getCinema() {
+        return this.cinema;
     }
 
     protected HashMap<String, Object> getRowSeatsData(String rowNumber) {
@@ -30,18 +36,6 @@ public class CinemaRoom {
 
     protected String getRoomName() {
         return this.cinemaRoomName;
-    }
-
-    protected void setCinemaData(HashMap<String, String> cinemaData) {
-        this.cinemaData = cinemaData;
-    }
-
-    protected String getCinemaName() {
-        return this.cinemaData.get("cinemaName");
-    }
-
-    protected String getCinemaAddress() {
-        return this.cinemaData.get("cinemaAddress");
     }
 
     protected int getStatusSeatIsTemporarilyReserved() {

@@ -56,27 +56,43 @@ public class Main {
         cinema2.setCinemaAddress("ul. Henryka N., 30-999 Warszawa");
         headquarter.addCinema(cinema2);
 
-        CinemaRoom cinemaRoom1 = new CinemaRoom("room 1");
+        // cinema1
+        CinemaRoom cinemaRoom1 = new CinemaRoom(cinema1, "room 1");
         cinemaRoom1.createSeatsForOneRow(1, 1);
         cinemaRoom1.createSeatsForOneRow(2, 2);
         cinemaRoom1.createSeatsForOneRow(3, 3, "VIP");
         cinemaRoom1.createSeatsForOneRow(4, 4);
         cinemaRoom1.createSeatsForOneRow(5, 5);
         cinema1.addCinemaRoom(cinemaRoom1);
-        cinema2.addCinemaRoom(cinemaRoom1);
 
-        CinemaRoom cinemaRoom2 = new CinemaRoom("room 2");
+        CinemaRoom cinemaRoom2 = new CinemaRoom(cinema1, "room 2");
         cinemaRoom2.createSeatsForOneRow(1, 4);
-        cinemaRoom2.createSeatsForOneRow(2, 4);
-        cinemaRoom2.createSeatsForOneRow(3, 2, "VIP");
-        cinemaRoom2.createSeatsForOneRow(4, 4);
-        cinemaRoom2.createSeatsForOneRow(5, 2);
+        cinemaRoom2.createSeatsForOneRow(2, 6);
+        cinemaRoom2.createSeatsForOneRow(3, 6,"VIP");
+        cinemaRoom2.createSeatsForOneRow(4, 6);
+        cinemaRoom2.createSeatsForOneRow(5, 5);
         cinema1.addCinemaRoom(cinemaRoom2);
-        cinema2.addCinemaRoom(cinemaRoom2);
+
+        //cinema 2
+        CinemaRoom cinemaRoom1c2 = new CinemaRoom(cinema2, "room 3");
+        cinemaRoom1c2.createSeatsForOneRow(1, 5);
+        cinemaRoom1c2.createSeatsForOneRow(2, 5);
+        cinemaRoom1c2.createSeatsForOneRow(3, 5, "VIP");
+        cinemaRoom1c2.createSeatsForOneRow(4, 5);
+        cinemaRoom1c2.createSeatsForOneRow(5, 5);
+       cinema2.addCinemaRoom(cinemaRoom1c2);
+
+        CinemaRoom cinemaRoom2c2 = new CinemaRoom(cinema2, "room 4");
+        cinemaRoom2c2.createSeatsForOneRow(1, 4);
+        cinemaRoom2c2.createSeatsForOneRow(2, 4);
+        cinemaRoom2c2.createSeatsForOneRow(3, 4, "VIP");
+        cinemaRoom2c2.createSeatsForOneRow(4, 4);
+        cinemaRoom2c2.createSeatsForOneRow(5, 4);
+        cinema2.addCinemaRoom(cinemaRoom2c2);
 
         // cinema1
         MovieScreenig ms1 = new MovieScreenig(headquarter.getMovieData("Bolek i Lolek"),
-                "2025-02-01", "14:15:00", cinema1.getCinemaRoom("room 1"));
+                "2025-02-10", "14:15:00", cinema1.getCinemaRoom("room 1"));
 
         MovieScreenig ms2 = new MovieScreenig(headquarter.getMovieData("Moana"),
                 "2025-02-04", "18:00:00", cinema1.getCinemaRoom("room 1"));
@@ -98,19 +114,19 @@ public class Main {
 
         // cinema2
         MovieScreenig ms1c2 = new MovieScreenig(headquarter.getMovieData("Zmiennokształtni"),
-                "2025-02-01", "14:15:00", cinema2.getCinemaRoom("room 1"));
+                "2025-02-01", "14:15:00", cinema2.getCinemaRoom("room 3"));
 
         MovieScreenig ms2c2 = new MovieScreenig(headquarter.getMovieData("Kleks i  wynalazek ..."),
-                "2025-02-04", "18:05:00", cinema2.getCinemaRoom("room 1"));
+                "2025-02-04", "18:05:00", cinema2.getCinemaRoom("room 3"));
 
         MovieScreenig ms3c2 = new MovieScreenig(headquarter.getMovieData("Bolek i Lolek"),
-                "2025-02-10", "15:30:00", cinema2.getCinemaRoom("room 1"));
+                "2025-02-10", "15:30:00", cinema2.getCinemaRoom("room 4"));
 
         MovieScreenig ms4c2 = new MovieScreenig(headquarter.getMovieData("Zmiennokształtni", "2D"),
-                "2025-02-04", "18:00:00", cinema2.getCinemaRoom("room 2"));
+                "2025-02-04", "18:00:00", cinema2.getCinemaRoom("room 3"));
 
         MovieScreenig ms5c2 = new MovieScreenig(headquarter.getMovieData("Zmiennokształtni", "3D"),
-                "2025-02-21", "19:10:00", cinema2.getCinemaRoom("room 2"));
+                "2025-02-21", "19:10:00", cinema2.getCinemaRoom("room 4"));
 
         cinema2.addMovieScreenigToCalendar(ms1c2);
         cinema2.addMovieScreenigToCalendar(ms2c2);
@@ -125,7 +141,7 @@ public class Main {
         //cinema1.printMovieScreeningData("Moana");
         //cinema1.printMovieScreeningData("Moana", "2025-02-04", "17:30:00");
 
-
+        // registered client
         Client c1 = new Client("bolek1@gmail.com");
         c1.setClientName("Bolek II");
         headquarter.addClientToCollection(c1);
@@ -134,14 +150,15 @@ public class Main {
         c2.setClientName("Lolek III");
         headquarter.addClientToCollection(c2);
 
+        // reservation
         Reservation res1 = new Reservation(ms1c2);
         res1.chooseSeatsPerRow("2", "1,");
-        res1.chooseSeatsPerRow("4", "2, 3");
+        res1.chooseSeatsPerRow("4", "2, 3,4");
         //res1.setClient("gosc@gmail.com");
         res1.setClient(c1);
         res1.confirmReservation();
         headquarter.addReservationToCollection(res1);
-        //res1.printReservationDetails();
+        //res1.printReservationDetails();*/
 
         Reservation res2 = new Reservation(ms1);
         res2.chooseSeatsPerRow("5", "1");
@@ -159,6 +176,7 @@ public class Main {
         //res3.printReservationDetails();
 
         Reservation res4 = new Reservation(ms1);
+        res2.chooseSeatsPerRow("5", "1,2,3");
         res4.chooseSeatsPerRow("3", "1,3");
         //res1.setClient("gosc@gmail.com");
         res4.setClient(c2);
@@ -166,9 +184,11 @@ public class Main {
         headquarter.addReservationToCollection(res4);
         //res1.printReservationDetails();
 
+        // reservation print
         headquarter.printAllClientReservations(c1);
         //headquarter.printAllClientReservations(c2);
 
+        // PurchaseDocument
         PurchaseDocument pd1 = new PurchaseDocument(res1);
         pd1.payForReservation(true, true);
         headquarter.addPurchaseDocumentsToCollection(pd1);
@@ -179,7 +199,6 @@ public class Main {
 
         //pd1.cancelReservation();
 
-        //headquarter.printAllClientReservations(c1);
         //headquarter.printAllClientPurchaseDocuments(c1);
 
 

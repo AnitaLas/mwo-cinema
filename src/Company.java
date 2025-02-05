@@ -62,22 +62,14 @@ public class Company {
         this.clientPurchaseDocuments.put(purchaseDocument.getClient().getClientEmail(), this.purchaseDocuments);
     }
 
-    protected List<Reservation> getAllClientReservations(Client client) {
-        return this.clientReservations.get(client.getClientEmail());
-    }
-
     protected void printAllClientReservations(Client client) {
-        for (Reservation res : getAllClientReservations(client)) {
+        for (Reservation res : this.clientReservations.get(client.getClientEmail())) {
             res.printReservationDetails();
         }
     }
 
-    protected List<PurchaseDocument> getAllClientPurchaseDocuments(Client client) {
-        return this.clientPurchaseDocuments.get(client.getClientEmail());
-    }
-
     protected void printAllClientPurchaseDocuments(Client client) {
-        for (PurchaseDocument pd : getAllClientPurchaseDocuments(client)) {
+        for (PurchaseDocument pd :  this.clientPurchaseDocuments.get(client.getClientEmail())) {
             pd.printReservationDetails();
         }
     }

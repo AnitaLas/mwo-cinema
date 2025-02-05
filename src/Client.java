@@ -9,10 +9,6 @@ public class Client {
         this.clientData.put("clientEmail", clientEmail);
     }
 
-    /*protected void setClientEmail(String clientEmail) {
-        this.clientData.put("clientEmail", clientEmail);
-    }*/
-
     protected void setClientName(String clientName) {
         this.clientData.put("clientName", clientName);
     }

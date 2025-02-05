@@ -9,7 +9,8 @@ public class MovieScreenig {
     private LocalDate date;
     private LocalTime time;
     private CinemaRoom cinemaRoom;
-    ;
+    private HashMap<String, String> cinemaData;
+
 
     MovieScreenig(Movie movieData, String date, String time, CinemaRoom cinemaRoom) {
         this.movieData = movieData;
@@ -39,10 +40,6 @@ public class MovieScreenig {
 
     protected LocalTime getTime() {
         return this.time;
-    }
-
-    protected String getMovieScreenigHour() {
-        return (String) this.screenigData.get("movieScreenigHour");
     }
 
     protected CinemaRoom getCinemaRoom() {
